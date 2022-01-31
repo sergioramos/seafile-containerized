@@ -3,10 +3,11 @@ ENV SEAFILE_SERVER=seafile-server SEAFILE_VERSION=9.0.2
 
 RUN apk add --no-cache wget
 
+ARG TARGETPLATFORM
+COPY ${TARGETPLATFORM}/seafile-server_${SEAFILE_VERSION}.tar.gz /tmp
 RUN cd /tmp && \
-    wget https://download.seadrive.org/seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz && \
-    tar -zxvf seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz && \
-    rm -f seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz
+    tar -zxvf seafile-server_${SEAFILE_VERSION}.tar.gz && \
+    rm -f seafile-server_${SEAFILE_VERSION}.tar.gz
 
 RUN sed -i "s@.*INNER_FILE_SERVER_ROOT.*@INNER_FILE_SERVER_ROOT = os.environ.get('INNER_FILE_SERVER_ROOT')@" /tmp/seafile-server-${SEAFILE_VERSION}/seahub/seahub/settings.py
 

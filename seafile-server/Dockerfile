@@ -4,10 +4,11 @@ RUN apk add --no-cache wget
 
 ENV SEAFILE_SERVER=seafile-server SEAFILE_VERSION=9.0.2
 
+ARG TARGETPLATFORM
+COPY ${TARGETPLATFORM}/seafile-server_${SEAFILE_VERSION}.tar.gz /tmp
 RUN cd /tmp && \
-    wget https://download.seadrive.org/seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz && \
-    tar -zxvf seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz && \
-    rm -f seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz
+    tar -zxvf seafile-server_${SEAFILE_VERSION}.tar.gz && \
+    rm -f seafile-server_${SEAFILE_VERSION}.tar.gz
 
 FROM ubuntu:focal-20211006
 
